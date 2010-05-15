@@ -9,7 +9,8 @@ categories = {
 
 classifiers = {
   :bayes     => Classifier::Bayes.new(*categories.keys),
-  :wordscore => Classifier::WordScore.new(*categories.keys)
+  :wordscore => Classifier::WordScore.new(*categories.keys),
+  :lsi       => Classifier::LSI.new
 }
 
 categories.each do |category, training_data|
@@ -32,8 +33,10 @@ classifiers.each do |name, classifier|
   samples.each do |sample|
     puts "  > #{sample}"
     puts "  * #{classifier.classify(sample)}"
-    classifier.classifications(sample).each do |category, score|
-      printf "    %10s => %4.10f\n", category, score
+    if classifier.respond_to?(:classifications)
+      classifier.classifications(sample).each do |category, score|
+        printf "    %10s => %4.10f\n", category, score
+      end
     end
   end
 end

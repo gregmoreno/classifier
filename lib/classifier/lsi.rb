@@ -65,6 +65,11 @@ module Classifier
       build_index if @auto_rebuild
     end
 
+    # Have the same interface as Bayes
+    def train(category, text)
+      add_item(text, category)
+    end
+
     # A less flexible shorthand for add_item that assumes 
     # you are passing in a string with no categorries. item
     # will be duck typed via to_s . 
