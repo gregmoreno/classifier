@@ -23,11 +23,14 @@ class Bayes
 	#     b.train "The other", "The other text"
 	def train(category, text)
 		category = category.prepare_category_name
+
 		text.word_hash.each do |word, count|
 			@categories[category][word]     ||=     0
 			@categories[category][word]      +=     count
 			@total_words += count
 		end
+    
+    @categories[category]
 	end
 
 	#
